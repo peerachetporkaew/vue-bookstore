@@ -56,8 +56,7 @@
         <div id="app" class="container" style="margin: 2%;">
             {{message}}
             <hr/>
-            <app-user v-on:childtoparent="onChildClick" v-for="user in users" :username="user.username"></app-user>
-
+            <app-user v-for="user in users" :username="user.username"></app-user>
             <button class="btn btn-primary" @click="handleClick">Click Me</button>
         </div>
     </div>
@@ -111,7 +110,7 @@
                 },
 
                 onChildClick: function(value) {
-                    alert(value)
+                    alert(value + " from child")
                 }
 
             }
@@ -129,7 +128,7 @@
             methods: {
                 click: function(event) {
                     alert(this.username)
-                    this.$emit('childtoparent', this.username + " from child")
+                    this.$parent.onChildClick(this.username + " from child")
                 }
             }
         });
