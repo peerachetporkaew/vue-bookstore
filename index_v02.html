@@ -128,7 +128,7 @@
             methods: {
                 click: function(event) {
                     alert(this.username)
-                    this.$parent.onChildClick(this.username + " from child")
+                    this.$parent.onChildClick(this.username + " from child") // Not a good way to do this, reduce reusability
                 }
             }
         });

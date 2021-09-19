@@ -54,39 +54,16 @@
                 </div>
             </nav>
             <div class="container" style="margin-top : 30px;">
-                {{message}}
-                <hr/>
-                <app-user v-on:child-to-parent="onChildClick" v-for="user in users" :username="user.username"></app-user>
-
+                {{count}}
                 <button class="btn btn-primary" @click="handleClick">Click Me</button>
             </div>
         </div>
     </div>
 
-    <template id="child-template">
-        <div class="user">
-            <p> {{username}} </p>
-            <button @click="click" class="btn btn-primary">Add</button>
-        </div>
-    </template>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        const store = new Vuex.Store({
-            state: {
-                count: 0
-            },
-            mutations: {
-                increment(state, num) {
-                    console.log(num)
-                    state.count++
-                }
-            }
-        })
 
+    <script>
         let app = Vue.createApp({
 
             data: function() {
@@ -99,64 +76,26 @@
                         username: "Max1"
                     }, {
                         username: "Max2"
-                    }, ]
+                    }, ],
 
-
+                    counter: 0
                 }
             },
 
-            mounted: function() {
-
-                /*
-                axios
-                    .get("https://api.coindesk.com/v1/bpi/currentprice.json")
-                    .then(response => (this.message = response.data.bpi.USD.rate))
-                */
+            computed: {
+                count: function() {
+                    return "Counter : " + this.counter
+                }
             },
 
             methods: {
                 handleClick: function() {
-                    alert('hi');
-                    this.users = [{
-                        username: "Max0"
-                    }, {
-                        username: "Max1"
-                    }]
-                },
-
-                alertx: function() {
-                    alert('X')
-                },
-
-                onChildClick: function(value) {
-                    alert(value)
-                    this.$store.commit("increment", 4);
-
+                    this.counter += 1
                 }
-
             }
-
 
         })
 
-        app.component('app-user', {
-            data: function() {
-                return {}
-            },
-            props: ['username'],
-            template: "#child-template",
-
-            methods: {
-                click: function(event) {
-                    alert(this.username)
-                    console.log(this.$store.state.count)
-                    this.$emit('childToParent', this.username + " from child")
-                }
-            }
-        });
-
-
-        app.use(store);
         app.mount("#app")
     </script>
 
